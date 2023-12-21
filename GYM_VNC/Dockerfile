@@ -30,52 +30,17 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-py37_4.10.3-Linu
 RUN pip install torch==1.10.1+cu111 torchvision==0.11.2+cu111 torchaudio==0.10.1 -f https://download.pytorch.org/whl/torch_stable.html
 RUN conda install --channel=numba llvmlite conda=${CONDA_V}
 RUN pip install pyglet==1.5.15 tensorflow==2.1.0 tensorboard==2.1 tensorflow-gpu==2.1.0
-#RUN conda install -c conda-forge tensorboardx -y && \
-#    conda install -c conda-forge tensorboard -y
 
-# It is easy to debug run every command seperately
-
-#RUN conda install -c conda-forge tensorboardx -y && \
-#    conda install -c conda-forge notebook -y && \
-#    conda install -c conda-forge numpy=1.16.6 -y && \
-#    conda install -c conda-forge pandas -y && \
-#    conda install -c conda-forge matplotlib -y && \
-#    conda install -c conda-forge opencv -y && \
-#    conda install -c conda-forge scikit-learn -y && \
-#    conda install -c conda-forge tqdm -y && \
-#    conda install -c conda-forge scikit-image -y && \
-#    conda install -c anaconda scipy=1.5.3 -y && \
-#    conda install -c anaconda h5py=2.10.0 -y
 
 ######################################################################
-# 4. installing OpenAI Gym (plus dependencies)
+# 3. installing OpenAI Gym (plus dependencies)
 RUN pip install gym==0.18.3 pyopengl
-# 4.1 installing roboschool and its dependencies.
+# 3.1 installing roboschool and its dependencies.
 RUN apt-get update \
     && apt-get install --no-install-recommends -y cmake ffmpeg pkg-config qtbase5-dev libqt5opengl5-dev libassimp-dev libpython3.7-dev libboost-python-dev libtinyxml-dev
-# This got some dependencies, so let's get going
-# https://github.com/openai/roboschool
-#WORKDIR /gym
-#ENV ROBOSCHOOL_PATH="/gym/roboschool"
-## installing bullet (the physics engine of roboschool) and its dependencies
-#RUN apt-get update \
-#    && apt-get install -y --no-install-recommends git gcc g++ && \
-#	git clone https://github.com/openai/roboschool && \
-#	git clone https://github.com/olegklimov/bullet3 -b roboschool_self_collision && \
-#	mkdir bullet3/build && \
-#	cd    bullet3/build && \
-#	cmake -DBUILD_SHARED_LIBS=ON -DUSE_DOUBLE_PRECISION=1 -#DCMAKE_INSTALL_PREFIX:PATH=$ROBOSCHOOL_PATH/roboschool/cpp-household/bullet_local_install -#DBUILD_CPU_DEMOS=OFF -DBUILD_BULLET2_DEMOS=OFF -DBUILD_EXTRAS=OFF  -DBUILD_UNIT_TESTS=OFF -#DBUILD_CLSOCKET=OFF -DBUILD_ENET=OFF -DBUILD_OPENGL3_DEMOS=OFF .. && \
-#	make -j4 && \
-#	make install
 
-#WORKDIR /gym/roboschool
-#RUN	pip install -e ./
-
-# 5. installing X and xvfb so we can SEE the action using a remote desktop access (VNC)
+# 4. installing X and xvfb so we can SEE the action using a remote desktop access (VNC)
 # and because this is the last apt, let's clean up after ourselves
-#RUN sed -i 's/kr.archive.ubuntu.com/mirror.kakao.com/g' /etc/apt/sources.list
-#RUN cat /etc/apt/sources.list
-#RUN sed "s/security.ubuntu.com/mirror.kakao.com" -i /etc/apt/sources.list
 RUN apt-get update
 RUN apt-get install -y x11vnc
 RUN apt-get install -y xvfb
