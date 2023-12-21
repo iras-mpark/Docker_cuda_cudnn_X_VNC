@@ -20,4 +20,5 @@ Case 2. Remote Windows (RealVNC)
 
 # Connect via VNC viewer
 Case 1. Own Ubuntu (0.0.0.0:5900)
+
 Case 2. Remote Windows (UBUNTU IP:5900)
