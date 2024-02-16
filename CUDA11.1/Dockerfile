@@ -53,7 +53,7 @@ RUN CUDNN_TAR_FILE="cudnn-11.1-linux-x64-v8.0.5.39.tgz" \
     && rm -rf /tmp/cudnn
 
 # Nvidia driver
-RUN sudo add-apt-repository ppa:graphics-drivers/ppa \
+RUN add-apt-repository ppa:graphics-drivers/ppa \
     && apt install -y nvidia-driver-530
 # installing tensorflow-gpu
 RUN apt-get install python3-pip \
