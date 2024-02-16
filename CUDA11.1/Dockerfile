@@ -3,6 +3,7 @@
 ########################################################
 FROM ubuntu:18.04
 
+ARG DEBIAN_FRONTEND=noninteractive
 # install other import packages
 RUN apt-get update && apt-get install -y build-essential libxml2
 # RUN apt-get update && apt-get install -y freeglut3-dev build-essential libx11-dev libxmu-dev libxi-dev libglu1-mesa libglu1-mesa-dev wget software-properties-common
@@ -56,5 +57,5 @@ RUN CUDNN_TAR_FILE="cudnn-11.1-linux-x64-v8.0.5.39.tgz" \
 RUN add-apt-repository ppa:graphics-drivers/ppa \
     && apt install -y nvidia-driver-530
 # installing tensorflow-gpu
-RUN apt-get install python3-pip \
-    && yes | pip3 install --user tensorflow-gpu==2.1.0
+RUN apt install -y python3-pip \
+    && pip3 install --user tensorflow-gpu==2.1.0
