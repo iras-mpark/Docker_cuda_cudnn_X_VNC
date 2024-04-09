@@ -5,7 +5,7 @@ FROM ubuntu:22.04
 LABEL maintainer="Minkyu Park <mpark@changwon.ac.kr>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y build-essential libxml2
+RUN apt-get update && apt-get install -y build-essential libxml2 git gedit
 RUN apt install -y python3-pip
 
 ENV HOME /root
@@ -27,7 +27,9 @@ RUN echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/r
 
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && source ~/.bashrc
 
-RUN apt install ros-humble-gazebo-ros-pkgs
+RUN apt install ros-humble-gazebo-ros-pkgs python3-rosdep && \
+    rosdep init && rosdep update && \
+    apt install python3-colcon-common-extensions ros-humble-xacro
 
 
 # installing X and xvfb so we can SEE the action using a remote desktop access
