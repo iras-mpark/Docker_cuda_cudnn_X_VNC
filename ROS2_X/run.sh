@@ -6,6 +6,7 @@ docker run -it \
     --device=/dev/nvidiactl \
     --device=/dev/nvidia-uvm \
     --device=/dev/nvidia0 \
+    --net=host \
     --privileged \
-    --name mk_ros2_x \
+    --name ros2_x \
     mk:ros2_x
