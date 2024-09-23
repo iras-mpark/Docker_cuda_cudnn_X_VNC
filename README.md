@@ -48,8 +48,8 @@
     		sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     		sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
      		```
-    		</pre>
-      		</code>
+    		</code>
+      		</pre>
     
    		4. `sudo apt-get update`
    		5. `sudo apt-get install -y nvidia-docker2`
