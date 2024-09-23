@@ -1,6 +1,6 @@
 # Ubuntu22.04
 
-## installation
+## build
 
 ```
 #builds and runs the image, binding your path to the container
@@ -11,6 +11,12 @@
 ```
 $ sudo chmod 777 build.sh
 $ ./build.sh
+```
+
+## run
+```
+$ sudo chmod 777 run.sh
+$ ./run.sh
 ```
 
 # Check connection of X-server
