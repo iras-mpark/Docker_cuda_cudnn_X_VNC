@@ -31,6 +31,7 @@
 		1. `sudo apt-get update`
 		2. `sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common`
 		3. Add GPG key and repository
+     
      		22.04
      		<pre>
 		<code>
@@ -59,7 +60,7 @@
    		5. `sudo apt-get install -y nvidia-docker2`
    		6. `sudo systemctl restart docker`
    		7. Finally check installation `sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi`
-	5. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
+	4. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
 		1. `sudo groupadd docker`
 		2. `sudo usermod -aG docker $USER`
 		3. Reboot
