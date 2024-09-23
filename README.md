@@ -30,17 +30,26 @@
 	3. Install nvidia-docker (refer. https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/install-guide.html#docker)
 		1. `sudo apt-get update`
 		2. `sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common`
-		3. `curl https://get.docker.com | sh && sudo systemctl --now enable docker`
+		3. Add GPG key and repository
+     		22.04
 		```
+  		curl https://get.docker.com | sh && sudo systemctl --now enable docker
 		distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 		&& curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
 		&& curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
    		```
+  		24.04
+    		```
+    		curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+  		&& curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
+    		sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
+    		sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list
+    		```
    		4. `sudo apt-get update`
    		5. `sudo apt-get install -y nvidia-docker2`
    		6. `sudo systemctl restart docker`
    		7. Finally check installation `sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi`
-	4. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
+	5. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
 		1. `sudo groupadd docker`
 		2. `sudo usermod -aG docker $USER`
 		3. Reboot
