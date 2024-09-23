@@ -8,6 +8,10 @@
 
 * To change the docker name, adjust name in `build.sh` file
 
+```
+$ sudo chmod 777 build.sh
+$ ./build.sh
+```
 
 # Check connection of X-server
 ```
