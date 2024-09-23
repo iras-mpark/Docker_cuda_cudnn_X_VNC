@@ -31,14 +31,14 @@
 		1. `sudo apt-get update`
 		2. `sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common`
 		3. Add GPG key and repository
-     
-     		22.04
-	     <pre><code>
+		
+  		22.04
+    		<pre><code>
 			curl https://get.docker.com | sh && sudo systemctl --now enable docker \
 			distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
 			&& curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
 			&& curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
-	     </code></pre>
+		</code></pre>
   
     
   		24.04
