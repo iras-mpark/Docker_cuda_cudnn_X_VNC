@@ -44,7 +44,8 @@
   
     
   		24.04
-    		```curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
+
+    ```curl -fsSL https://nvidia.github.io/libnvidia-container/gpgkey | sudo gpg --dearmor -o /usr/share/keyrings/nvidia-container-toolkit-keyring.gpg \
   		&& curl -s -L https://nvidia.github.io/libnvidia-container/stable/deb/nvidia-container-toolkit.list | \
     		sed 's#deb https://#deb [signed-by=/usr/share/keyrings/nvidia-container-toolkit-keyring.gpg] https://#g' | \
     		sudo tee /etc/apt/sources.list.d/nvidia-container-toolkit.list```
@@ -53,7 +54,7 @@
    		5. `sudo apt-get install -y nvidia-docker2`
    		6. `sudo systemctl restart docker`
    		7. Finally check installation `sudo docker run --rm --gpus all nvidia/cuda:11.0-base nvidia-smi`
-	4. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
+	5. Docker post-installation (refer. https://docs.docker.com/engine/install/linux-postinstall/)
 		1. `sudo groupadd docker`
 		2. `sudo usermod -aG docker $USER`
 		3. Reboot
