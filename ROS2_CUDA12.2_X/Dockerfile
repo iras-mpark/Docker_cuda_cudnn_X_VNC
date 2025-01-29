@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install -y build-essential libxml2 git gedit
 RUN apt install -y python3-pip
 
 # set cuda paths
-ENV PATH /usr/local/cuda-12.2/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/cuda-12.2/lib64:/usr/local/cuda/lib64
+ENV PATH /usr/local/cuda/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib:/usr/local/cuda/lib
 ENV PATH /usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib64
+ENV LD_LIBRARY_PATH /usr/local/cuda/lib
 
 # set cuda version
 ENV CUDA_VERSION 12.2
@@ -47,9 +47,9 @@ ENV CUDNN_TAR_FILE="cudnn-linux-x86_64-8.9.4.25_cuda12-archive.tar.xz"
 RUN cd /tmp/cudnn\
     && chmod 777 ${CUDNN_TAR_FILE}\
     && tar -xf ${CUDNN_TAR_FILE}\
-    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/include/cudnn.h /usr/local/cuda-12.2/include \
-    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/lib/libcudnn* /usr/local/cuda-12.2/lib64/ \
-    && chmod a+r /usr/local/cuda-12.2/lib64/libcudnn* \
+    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/include/cudnn.h /usr/local/cuda/include \
+    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/lib/libcudnn* /usr/local/cuda/lib/ \
+    && chmod a+r /usr/local/cuda/lib/libcudnn* \
     && rm -rf /tmp/cudnn
 
 # Nvidia driver
