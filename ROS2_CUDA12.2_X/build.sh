@@ -1,1 +1,1 @@
-docker build -t mk:ros2_cuda_x ./
+docker build --progress=plain -t mk:ros2_cuda_x ./

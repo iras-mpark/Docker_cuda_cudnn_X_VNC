@@ -4,15 +4,26 @@
 FROM ubuntu:22.04
 LABEL maintainer="Minkyu Park <mpark@changwon.ac.kr>"
 
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y build-essential libxml2 git gedit
-RUN apt install -y python3-pip
+ENV HOME /root
 
-# set cuda paths
-ENV PATH /usr/local/cuda/bin:/usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib:/usr/local/cuda/lib
-ENV PATH /usr/local/cuda/bin:${PATH}
-ENV LD_LIBRARY_PATH /usr/local/cuda/lib
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && apt-get install -y build-essential libxml2 git gedit
+RUN apt install -y python3-pip cmake openssl libssl-dev
+RUN apt remove -y --purge cmake
+
+# set cmake and cuda paths
+ENV PATH=/opt/cmake/bin:/usr/local/cuda-12.2/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH=/usr/local/cuda-12.2/lib64:/usr/local/cuda/lib64
+
+RUN apt install wget
+RUN cd /tmp \
+    && wget https://github.com/Kitware/CMake/releases/download/v3.31.5/cmake-3.31.5.tar.gz \
+    && tar -xzvf cmake-3.31.5.tar.gz \
+    && cd cmake-3.31.5 && ./bootstrap --prefix=/opt/cmake \
+    && make \
+    && make install \
+    && cmake --version
 
 # set cuda version
 ENV CUDA_VERSION 12.2
@@ -40,16 +51,15 @@ RUN ln -s /usr/bin/gcc-9 /usr/local/cuda/bin/gcc \
     && ln -s /usr/bin/g++-9 /usr/local/cuda/bin/g++
 
 
-
 # installing cudnn 8.9.4
 COPY cudnn /tmp/cudnn
 ENV CUDNN_TAR_FILE="cudnn-linux-x86_64-8.9.4.25_cuda12-archive.tar.xz"
 RUN cd /tmp/cudnn\
     && chmod 777 ${CUDNN_TAR_FILE}\
     && tar -xf ${CUDNN_TAR_FILE}\
-    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/include/cudnn.h /usr/local/cuda/include \
-    && cp -P cudnn-linux-x86_64-8.9.4.25_cuda12-archive/lib/libcudnn* /usr/local/cuda/lib/ \
-    && chmod a+r /usr/local/cuda/lib/libcudnn* \
+    && cp -r cudnn-linux-x86_64-8.9.4.25_cuda12-archive/include/cudnn* /usr/local/cuda-12.2/include/ \
+    && cp -r cudnn-linux-x86_64-8.9.4.25_cuda12-archive/lib/libcudnn* /usr/local/cuda-12.2/lib64/ \
+    && chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda-12.2/lib64/libcudnn* \
     && rm -rf /tmp/cudnn
 
 # Nvidia driver
@@ -58,11 +68,11 @@ RUN add-apt-repository ppa:graphics-drivers/ppa \
 # installing tensorflow-gpu
 RUN apt install -y python3-pip
 
-ENV HOME /root
+
 # installing ROS2
-RUN apt update && apt -y upgrade && \
-    apt install -y locales && \
-    locale-gen en_US en_US.UTF-8 && \
+RUN apt update && apt -y upgrade
+RUN apt install -y locales
+RUN locale-gen en_US en_US.UTF-8 && \
     update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
     export LANG=en_US.UTF-8
 
