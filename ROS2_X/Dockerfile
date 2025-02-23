@@ -5,10 +5,18 @@ FROM ubuntu:22.04
 LABEL maintainer="Minkyu Park <mpark@changwon.ac.kr>"
 
 ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update && apt-get install -y build-essential libxml2 git gedit
+
+RUN sed -i 's|http://security.ubuntu.com/ubuntu|http://mirror.kakao.com/ubuntu|g' /etc/apt/sources.list \
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean \
+    && apt-get update
+
+RUN apt clean
+RUN apt update && apt -y upgrade
+# RUN apt-get install -y build-essential libxml2 git gedit
 RUN apt install -y python3-pip
 
-ENV HOME /root
+ENV HOME=/root
 # installing ROS2
 RUN apt update && apt -y upgrade && \
     apt install -y locales && \

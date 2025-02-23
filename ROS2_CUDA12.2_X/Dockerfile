@@ -29,9 +29,9 @@ RUN cd /tmp \
 ENV CUDA_VERSION 12.2
 
 # nvidia-docker
- ENV NVIDIA_VISIBLE_DEVICES all
- ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
- ENV NVIDIA_REQUIRE_CUDA "cuda>=12.2"
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES compute,utility
+ENV NVIDIA_REQUIRE_CUDA "cuda>=12.2"
 
 # install cuda from a runfile
 COPY cuda /tmp/cuda
@@ -64,7 +64,7 @@ RUN cd /tmp/cudnn\
 
 # Nvidia driver
 RUN add-apt-repository ppa:graphics-drivers/ppa \
-    && apt install -y nvidia-driver-535
+    && apt install -y nvidia-driver-560
 # installing tensorflow-gpu
 RUN apt install -y python3-pip
 
